@@ -1,15 +1,13 @@
 package com.hamker.calculator
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
-
-import com.android.volley.toolbox.Volley
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.JsonObjectRequest
-
+import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
@@ -153,8 +151,6 @@ class MainActivity : AppCompatActivity() {
 
     fun onEquals(view: View) {
         val t = tvInput.text.toString()
-        println(t[t.length - 1].isDigit())
-        println(containsOperator(t))
         if (
             t[t.length - 1].isDigit()
             && containsOperator(t)
@@ -164,7 +160,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun appendCurrency(currency: Double) {
-        val lastChar = tvInput.text[tvInput.text.length - 1]
+        val lastChar: Char = (
+                if (tvInput.text.isEmpty()) '*' // return an arbitrary char
+                else tvInput.text[tvInput.text.length - 1]
+                )
 
         if (!lastChar.isDigit() && lastChar != '.') {
             tvInput.append(currency.toString())
